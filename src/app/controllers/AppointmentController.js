@@ -1,5 +1,6 @@
 import Appointment from '../models/Appointments'
 import User from '../models/User';
+import File from '../models/File';
 import {startOfHour,parseISO,isBefore} from 'date-fns';
 import * as YUP from 'yup';
 
@@ -54,6 +55,29 @@ class AppointmentController {
       user_id: req.userId,
       provider_id,
       date: hourStart
+    })
+    return res.json(appointment);
+  }
+
+  async index(req,res){
+    const appointment = await Appointment.findOne({
+      where: {user_id: req.userId, canceled_at: null},
+      order: ['date'],
+      attributes: ['id','date'],
+      include: [
+        {
+          model: User,
+          as: 'provider',
+          attributes: ['id', 'name'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['id','path','url'],
+            }
+          ]
+        },
+       ],
     })
     return res.json(appointment);
   }
