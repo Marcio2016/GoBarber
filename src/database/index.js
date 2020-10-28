@@ -27,7 +27,7 @@ class Database {
 
   mongo() {
     this.mongoConnection = mongoose.connect(
-      'mongodb://172.17.0.2:27017/gobarber',
+      'mongodb://172.17.0.4:27017/gobarber',
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
