@@ -8,6 +8,7 @@ import 'express-async-errors';
 import routes from './routes';
 import './database';
 import sentryConfig from './config/sentry';
+import cors from 'cors';
 
 class App {
   constructor() {
@@ -20,6 +21,7 @@ class App {
 
   middlewares() {
     this.server.use(Sentry.Handlers.requestHandler());
+    this.server.use(cors());
     this.server.use(express.json());
     this.server.use(
       '/files',
